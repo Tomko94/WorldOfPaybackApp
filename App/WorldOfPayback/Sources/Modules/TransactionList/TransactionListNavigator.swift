@@ -10,5 +10,7 @@ import Foundation
 import SwiftUIArch
 
 internal final class TransactionListNavigator: NavigatorLayer {
-    // Add TransactionListNavigator implementation here.
+    func pushTransactionDetailsView(transactionEntity: TransactionEntity) {
+        self.rootNavigator?.path.append(NavigationDestination.transactionDetails(transactionEntity: transactionEntity))
+    }
 }

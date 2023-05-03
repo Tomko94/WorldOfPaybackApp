@@ -11,6 +11,7 @@ import SwiftUIArch
 
 public enum NavigationDestination: Hashable {
     case dummy
+    case transactionDetails(transactionEntity: TransactionEntity)
 }
 
 class StackNavigator: RootNavigatorLayer {
@@ -18,6 +19,8 @@ class StackNavigator: RootNavigatorLayer {
         switch destination {
         case .dummy:
             Text("Dummy screen")
+        case let .transactionDetails(transactionEntity):
+            TransactionDetailsModule().assemble(rootNavigator: self)
         }
     }
 }

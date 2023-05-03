@@ -12,12 +12,33 @@ import SwiftUIArch
 internal struct TransactionListView<ViewModel: TransactionListViewModelType>: View, ViewLayerType {
     // MARK: - Internal Properties
 
-    @ObservedObject internal var viewModel: ViewModel
+    @StateObject internal var viewModel: ViewModel
 
     // MARK: - Body Definition
 
     internal var body: some View {
-        Text("Hello, world!")
+        VStack(spacing: 15) {
+            TransactionListHeaderView(viewModel.header)
+                .padding(.horizontal, 15)
+            
+            List {
+                ForEach(viewModel.transactions) {
+                    TransactionListItemView($0)
+                }
+            }
+            .animation(.default, value: viewModel.transactions)
+        }
+        .padding(.vertical, 15)
+        .navigationTitle("Transactions")
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbarBackground(
+            Color.gray,
+            for: .navigationBar
+        )
+        .toolbarBackground(.visible, for: .navigationBar)
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 

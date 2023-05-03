@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ValueEntity: Codable {
+public struct ValueEntity: Codable, Hashable {
     let amount: Decimal
     let currency: String
 }

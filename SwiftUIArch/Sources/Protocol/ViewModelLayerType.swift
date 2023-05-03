@@ -12,4 +12,6 @@ public protocol ViewModelLayerType: AnyObject {
     associatedtype NavigatorLayer: NavigatorLayerType
 
     var navigator: NavigatorLayer { get }
+    
+    func onAppear()
 }

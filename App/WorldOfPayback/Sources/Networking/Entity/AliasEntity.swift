@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct AliasEntity: Codable {
+struct AliasEntity: Codable, Hashable {
     let reference: String
 }

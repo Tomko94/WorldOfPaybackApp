@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TransactionDetailEntity: Codable {
+struct TransactionDetailEntity: Codable, Hashable {
     let description: String?
     let bookingDate: Date
     let value: ValueEntity

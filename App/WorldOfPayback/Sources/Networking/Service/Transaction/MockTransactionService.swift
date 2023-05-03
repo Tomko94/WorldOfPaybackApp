@@ -13,6 +13,7 @@ class MockTransactionService: TransactionServiceType {
     func getTransactionList() -> AnyPublisher<TransactionListEntity, Error> {
         MockEngine()
             .getEntity(forName: "PBTransactions")
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

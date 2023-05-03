@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TransactionEntity: Codable {
+public struct TransactionEntity: Codable, Hashable {
     let partnerDisplayName: String
     let alias: AliasEntity
     let category: Int

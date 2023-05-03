@@ -10,10 +10,25 @@ open class ViewModelLayer<NavigatorLayer: NavigatorLayerType>: ViewModelLayerTyp
     // MARK: - Open Properties
 
     open var navigator: NavigatorLayer
+    
+    // MARK: - Private Properties
+
+    private var initialized = false
 
     // MARK: - Initialization
 
     public init(navigator: NavigatorLayer) {
         self.navigator = navigator
+    }
+
+    open func initialize() {}
+
+    // MARK: - Lifecycle
+
+    open func onAppear() {
+        if !initialized {
+            initialize()
+            initialized = true
+        }
     }
 }
