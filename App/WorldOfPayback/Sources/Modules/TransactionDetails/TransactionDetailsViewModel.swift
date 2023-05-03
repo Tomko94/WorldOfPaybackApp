@@ -10,6 +10,7 @@ import Foundation
 import SwiftUIArch
 
 internal protocol TransactionDetailsViewModelType: ViewModelLayerType, ObservableObject {
+    var title: String { get }
     var partnerName: String { get }
     var description: String? { get }
 }
@@ -17,8 +18,9 @@ internal protocol TransactionDetailsViewModelType: ViewModelLayerType, Observabl
 internal final class TransactionDetailsViewModel: ViewModelLayer<TransactionDetailsNavigator>, TransactionDetailsViewModelType {
     // MARK: - Internal Published Properties
 
-    @Published internal var partnerName = "partnerName"
-    @Published internal var description: String? = "description"
+    @Published internal var title = Translations.localizedString("TransactionDetailsTitle")
+    @Published internal var partnerName = ""
+    @Published internal var description: String? = ""
 
     // MARK: - Private Properties
 
@@ -48,7 +50,7 @@ internal final class TransactionDetailsViewModel: ViewModelLayer<TransactionDeta
 
 extension TransactionDetailsViewModel {
     private func prepareModel(_ transactionEntity: TransactionEntity) {
-        partnerName = transactionEntity.partnerDisplayName
-        description = transactionEntity.transactionDetail.description
+        self.partnerName = transactionEntity.partnerDisplayName
+        self.description = transactionEntity.transactionDetail.description
     }
 }

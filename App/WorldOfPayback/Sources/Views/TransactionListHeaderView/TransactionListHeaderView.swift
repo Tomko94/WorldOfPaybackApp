@@ -9,15 +9,21 @@
 import SwiftUI
 
 struct TransactionListHeaderView: View {
-    @ObservedObject private var model: Model
+    // MARK: - private Properties
 
+    @ObservedObject private var model: Model
+    
+    // MARK: - Initialization
+    
     internal init(_ model: Model) {
         self.model = model
     }
 
+    // MARK: - Body Definition
+    
     var body: some View {
-        HStack(spacing: 10) {
-            VStack(spacing: 5) {
+        HStack(spacing: Layout.Spacing.small) {
+            VStack(spacing: Layout.Spacing.tiny) {
                 Text(model.transactionsSumTitle)
                     .font(.caption)
                 Text(model.transactionsSum)
@@ -31,14 +37,18 @@ struct TransactionListHeaderView: View {
                     if let category {
                         Text(String(category))
                     } else {
-                        Text("All")
+                        Text(model.allCategories)
                     }
                 }
             }
         }
-        .padding(.horizontal, 15)
+        .padding(.horizontal, Layout.Spacing.medium)
     }
 }
+
+// -----------------------------------------------------------------------------
+// MARK: - Preview
+// -----------------------------------------------------------------------------
 
 struct TransactionListHeaderView_Previews: PreviewProvider {
     static var previews: some View {

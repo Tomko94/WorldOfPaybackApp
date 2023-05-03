@@ -9,15 +9,21 @@
 import SwiftUI
 
 public struct TransactionListItemView: View {
+    // MARK: - private Properties
+
     private let model: Model
+    
+    // MARK: - Initialization
 
     internal init(_ model: Model) {
         self.model = model
     }
+    
+    // MARK: - Body Definition
 
     public var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: Layout.Spacing.none) {
                 Text(model.partnerName)
                     .font(.headline)
 
@@ -28,25 +34,29 @@ public struct TransactionListItemView: View {
 
                 Text(model.date)
                     .font(.caption2)
-                    .padding(.top, 5)
+                    .padding(.top, Layout.Spacing.tiny)
             }
 
             Spacer()
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: Layout.Spacing.none) {
                 Text(model.amount)
                     .font(.headline)
-                    .padding(.bottom, 5)
+                    .padding(.bottom, Layout.Spacing.tiny)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
+        .padding(.horizontal, Layout.Spacing.small)
+        .padding(.vertical, Layout.Spacing.tiny)
         .contentShape(Rectangle())
         .onTapGesture {
             model.action.send()
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// MARK: - Preview
+// -----------------------------------------------------------------------------
 
 struct TransactionListItemView_Previews: PreviewProvider {
     static var previews: some View {

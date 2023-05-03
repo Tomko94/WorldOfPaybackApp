@@ -12,12 +12,12 @@ import SwiftUIArch
 internal struct TransactionDetailsView<ViewModel: TransactionDetailsViewModelType>: View, ViewLayerType {
     // MARK: - Internal Properties
 
-    @ObservedObject internal var viewModel: ViewModel
+    @StateObject internal var viewModel: ViewModel
 
     // MARK: - Body Definition
 
     internal var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: Layout.Spacing.medium) {
             Text(viewModel.partnerName)
                 .font(.title)
 
@@ -25,8 +25,8 @@ internal struct TransactionDetailsView<ViewModel: TransactionDetailsViewModelTyp
                 Text($0)
             }
         }
-        .padding(.vertical, 15)
-        .navigationTitle("Transaction Details")
+        .padding(.vertical, Layout.Spacing.medium)
+        .navigationTitle(viewModel.title)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbarBackground(
             Color.gray,

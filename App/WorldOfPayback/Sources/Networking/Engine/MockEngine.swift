@@ -31,6 +31,7 @@ class MockEngine {
     func getEntity<T: Decodable>(forName name: String) -> AnyPublisher<T, Error> {
         getMockData(forName: name)
             .decode(type: T.self, decoder: jsonDecoder())
+            .delay(for: .seconds(Double.random(in: 1 ..< 2)), scheduler: RunLoop.current)
             .eraseToAnyPublisher()
     }
 }

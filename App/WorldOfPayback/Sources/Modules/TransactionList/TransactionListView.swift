@@ -17,9 +17,9 @@ internal struct TransactionListView<ViewModel: TransactionListViewModelType>: Vi
     // MARK: - Body Definition
 
     internal var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: Layout.Spacing.medium) {
             TransactionListHeaderView(viewModel.header)
-                .padding(.horizontal, 15)
+                .padding(.horizontal, Layout.Spacing.medium)
 
             List {
                 ForEach(viewModel.transactions) {
@@ -28,8 +28,9 @@ internal struct TransactionListView<ViewModel: TransactionListViewModelType>: Vi
             }
             .animation(.default, value: viewModel.transactions)
         }
-        .padding(.vertical, 15)
-        .navigationTitle("Transactions")
+        .padding(.vertical, Layout.Spacing.medium)
+        .toastController(with: viewModel.toastController)
+        .navigationTitle(viewModel.title)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbarBackground(
             Color.gray,

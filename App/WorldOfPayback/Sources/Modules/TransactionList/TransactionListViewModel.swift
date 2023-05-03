@@ -11,15 +11,19 @@ import Foundation
 import SwiftUIArch
 
 internal protocol TransactionListViewModelType: ViewModelLayerType, ObservableObject {
+    var title: String { get }
     var header: TransactionListHeaderView.Model { get }
     var transactions: [TransactionListItemView.Model] { get }
+    var toastController: ToastController.Model { get }
 }
 
 internal final class TransactionListViewModel: ViewModelLayer<TransactionListNavigator>, TransactionListViewModelType {
     // MARK: - Internal Published Properties
 
+    @Published internal var title = Translations.localizedString("TransactionListTitle")
     @Published internal var header = TransactionListHeaderView.Model()
     @Published internal var transactions: [TransactionListItemView.Model] = []
+    @Published internal var toastController = ToastController.Model()
 
     // MARK: - Private Properties
 
@@ -69,6 +73,7 @@ extension TransactionListViewModel {
 
 extension TransactionListViewModel {
     private func prepareModel() {
+        toastController.toastType = .loading
         serviceProvider
             .transactionService()
             .getTransactionList()
@@ -80,6 +85,7 @@ extension TransactionListViewModel {
                 }
             }, receiveValue: { [weak self] in
                 self?.prepareModel($0)
+                self?.toastController.toastType = .normal
             })
             .store(in: &bag)
     }
@@ -97,9 +103,10 @@ extension TransactionListViewModel {
 
         let transactionSum = transactions.map(\.transactionDetail.value.amount).reduce(0) { $0 + $1 }
         let header = TransactionListHeaderView.Model(
-            transactionsSumTitle: "Transactions value",
+            transactionsSumTitle: Translations.localizedString("TransactionsValue"),
             transactionsSum: "\(transactionSum)",
-            filterLabel: "Category",
+            filterLabel: Translations.localizedString("Category"),
+            allCategories: Translations.localizedString("All"),
             categories: categories
         )
 
@@ -116,13 +123,13 @@ extension TransactionListViewModel {
         let sortedTransactions = transactions.sorted {
             $0.transactionDetail.bookingDate > $1.transactionDetail.bookingDate
         }
-        
+
         self.transactions = sortedTransactions.map(mapTransactionItem)
     }
 
     private func mapTransactionItem(_ transaction: TransactionEntity) -> TransactionListItemView.Model {
         let item = TransactionListItemView.Model(transaction)
-
+        
         item.action
             .sink { [weak self] in
                 self?.transactionSelected(transactionEntity: transaction)

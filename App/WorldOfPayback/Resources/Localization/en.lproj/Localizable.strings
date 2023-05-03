@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  WorldOfPayback
+
+  Created by Tomasz Węsierski on 03/05/2023.
+  Copyright © 2023 tuist.io. All rights reserved.
+*/
+
+"TransactionDetailsTitle" = "Transaction Details";
+"TransactionListTitle" = "Transactions";
+"TransactionsValue" = "Transactions value";
+"Category" = "Category";
+"DateAndTimeFormat" = "dd.MM.yyyy HH:mm";
+"All" = "All";

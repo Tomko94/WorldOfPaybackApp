@@ -11,7 +11,7 @@ import SwiftUIArch
 
 internal final class TransactionDetailsModule: ModuleLayer<TransactionDetailsView<TransactionDetailsViewModel>> {
     // MARK: - Private Properties
-    
+
     private let transactionEntity: TransactionEntity
 
     // MARK: - Initialization

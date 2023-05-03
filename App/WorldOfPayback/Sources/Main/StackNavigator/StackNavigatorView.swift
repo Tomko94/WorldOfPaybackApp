@@ -10,8 +10,15 @@ import SwiftUI
 import SwiftUIArch
 
 struct StackNavigatorView<Content: View>: View {
-    @ObservedObject var navigator = StackNavigator()
+    // MARK: - Private Properties
+
+    @StateObject private var navigator = StackNavigator()
+
+    // MARK: - Public Properties
+
     var content: (_ rootNavigator: RootNavigatorLayer) -> Content
+
+    // MARK: - Body Definition
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
