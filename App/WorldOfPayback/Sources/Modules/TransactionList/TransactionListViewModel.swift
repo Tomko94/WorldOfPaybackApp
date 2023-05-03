@@ -49,13 +49,16 @@ extension TransactionListViewModel {
         navigator.pushTransactionDetailsView(transactionEntity: transactionEntity)
     }
 
-    private func filterItems(byCategory category: Int?) {
+    private func filterItems(byCategory categoryFilter: Int?) {
         guard let transactionsEntity else { return }
-        let filteredTransaction = transactionsEntity.filter {
-            category == nil || $0.category == category
+
+        let filteredTransactions = transactionsEntity.filter {
+            categoryFilter == nil || $0.category == categoryFilter
         }
-        let filteredTransactionSum = filteredTransaction.map(\.transactionDetail.value.amount).reduce(0) { $0 + $1 }
-        transactions = filteredTransaction.map(mapTransactionItem)
+
+        prepareransactionList(filteredTransactions)
+
+        let filteredTransactionSum = filteredTransactions.map(\.transactionDetail.value.amount).reduce(0) { $0 + $1 }
         header.transactionsSum = "\(filteredTransactionSum)"
     }
 }
@@ -83,8 +86,9 @@ extension TransactionListViewModel {
 
     private func prepareModel(_ transactions: [TransactionEntity]) {
         transactionsEntity = transactions
-        self.transactions = transactions.map(mapTransactionItem)
+
         prepareHeader(transactions)
+        prepareransactionList(transactions)
     }
 
     private func prepareHeader(_ transactions: [TransactionEntity]) {
@@ -106,6 +110,14 @@ extension TransactionListViewModel {
             .store(in: &actionBag)
 
         self.header = header
+    }
+
+    private func prepareransactionList(_ transactions: [TransactionEntity], categoryFilter: Int? = nil) {
+        let sortedTransactions = transactions.sorted {
+            $0.transactionDetail.bookingDate > $1.transactionDetail.bookingDate
+        }
+        
+        self.transactions = sortedTransactions.map(mapTransactionItem)
     }
 
     private func mapTransactionItem(_ transaction: TransactionEntity) -> TransactionListItemView.Model {
