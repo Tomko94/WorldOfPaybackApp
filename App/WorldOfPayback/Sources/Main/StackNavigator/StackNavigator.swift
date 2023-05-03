@@ -20,7 +20,7 @@ class StackNavigator: RootNavigatorLayer {
         case .dummy:
             Text("Dummy screen")
         case let .transactionDetails(transactionEntity):
-            TransactionDetailsModule().assemble(rootNavigator: self)
+            TransactionDetailsModule(transactionEntity).assemble(rootNavigator: self)
         }
     }
 }

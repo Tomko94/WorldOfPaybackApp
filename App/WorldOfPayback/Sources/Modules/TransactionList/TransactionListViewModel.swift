@@ -30,7 +30,7 @@ internal final class TransactionListViewModel: ViewModelLayer<TransactionListNav
 
     // MARK: - Initialization
 
-    init(navigator: TransactionListNavigator, _ serviceProvider: ServiceProviderType = ServiceProvider()) {
+    init(navigator: TransactionListNavigator, serviceProvider: ServiceProviderType = ServiceProvider()) {
         self.serviceProvider = serviceProvider
         super.init(navigator: navigator)
     }

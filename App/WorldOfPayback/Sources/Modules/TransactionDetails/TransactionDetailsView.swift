@@ -1,4 +1,4 @@
-//  
+//
 //  TransactionDetailsView.swift
 //  WorldOfPayback
 //
@@ -17,7 +17,25 @@ internal struct TransactionDetailsView<ViewModel: TransactionDetailsViewModelTyp
     // MARK: - Body Definition
 
     internal var body: some View {
-        Text("Hello, world!")
+        VStack(spacing: 15) {
+            Text(viewModel.partnerName)
+                .font(.title)
+
+            viewModel.description.map {
+                Text($0)
+            }
+        }
+        .padding(.vertical, 15)
+        .navigationTitle("Transaction Details")
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbarBackground(
+            Color.gray,
+            for: .navigationBar
+        )
+        .toolbarBackground(.visible, for: .navigationBar)
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 
@@ -27,6 +45,20 @@ internal struct TransactionDetailsView<ViewModel: TransactionDetailsViewModelTyp
 
 internal struct TransactionDetailsView_Previews: PreviewProvider {
     internal static var previews: some View {
-        TransactionDetailsView(viewModel: TransactionDetailsViewModel(navigator: TransactionDetailsNavigator(rootNavigator: nil)))
+        TransactionDetailsView(
+            viewModel: TransactionDetailsViewModel(
+                navigator: TransactionDetailsNavigator(rootNavigator: nil),
+                transactionEntity: TransactionEntity(
+                    partnerDisplayName: "partnerDisplayName",
+                    alias: AliasEntity(reference: ""),
+                    category: 0,
+                    transactionDetail: TransactionDetailEntity(
+                        description: "description",
+                        bookingDate: Date(),
+                        value: ValueEntity(amount: 23, currency: "USD")
+                    )
+                )
+            )
+        )
     }
 }

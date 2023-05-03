@@ -10,6 +10,8 @@ import Foundation
 import SwiftUIArch
 
 internal final class TransactionListModule: ModuleLayer<TransactionListView<TransactionListViewModel>> {
+    // MARK: - Assemble
+
     internal override func assemble(rootNavigator: RootNavigatorLayerType?) -> ViewLayer {
         let navigator = ViewLayer.ViewModelLayer.NavigatorLayer(rootNavigator: rootNavigator)
         let viewModel = ViewLayer.ViewModelLayer(navigator: navigator)

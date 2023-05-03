@@ -1,4 +1,4 @@
-//  
+//
 //  TransactionDetailsNavigator.swift
 //  WorldOfPayback
 //
@@ -9,6 +9,4 @@
 import Foundation
 import SwiftUIArch
 
-internal final class TransactionDetailsNavigator: NavigatorLayer {
-    // Add TransactionDetailsNavigator implementation here.
-}
+internal final class TransactionDetailsNavigator: NavigatorLayer {}

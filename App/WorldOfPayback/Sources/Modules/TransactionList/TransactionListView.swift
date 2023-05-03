@@ -20,7 +20,7 @@ internal struct TransactionListView<ViewModel: TransactionListViewModelType>: Vi
         VStack(spacing: 15) {
             TransactionListHeaderView(viewModel.header)
                 .padding(.horizontal, 15)
-            
+
             List {
                 ForEach(viewModel.transactions) {
                     TransactionListItemView($0)
