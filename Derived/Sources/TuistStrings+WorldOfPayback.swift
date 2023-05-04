@@ -12,8 +12,12 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name
 public enum WorldOfPaybackStrings {
+  /// All
+  public static let all = WorldOfPaybackStrings.tr("Localizable", "All")
   /// Category
   public static let category = WorldOfPaybackStrings.tr("Localizable", "Category")
+  /// Close
+  public static let close = WorldOfPaybackStrings.tr("Localizable", "Close")
   /// dd.MM.yyyy HH:mm
   public static let dateAndTimeFormat = WorldOfPaybackStrings.tr("Localizable", "DateAndTimeFormat")
   /// Transaction Details
@@ -22,6 +26,10 @@ public enum WorldOfPaybackStrings {
   public static let transactionListTitle = WorldOfPaybackStrings.tr("Localizable", "TransactionListTitle")
   /// Transactions value
   public static let transactionsValue = WorldOfPaybackStrings.tr("Localizable", "TransactionsValue")
+  /// Try Again
+  public static let tryAgain = WorldOfPaybackStrings.tr("Localizable", "Try Again")
+  /// Error loading data.\nCheck your internet connection.
+  public static let unknownError = WorldOfPaybackStrings.tr("Localizable", "UnknownError")
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name
