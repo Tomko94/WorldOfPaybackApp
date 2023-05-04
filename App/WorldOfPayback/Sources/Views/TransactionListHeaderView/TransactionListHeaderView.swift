@@ -32,7 +32,7 @@ struct TransactionListHeaderView: View {
 
             Spacer()
 
-            Picker(model.filterLabel, selection: $model.category) {
+            Picker(model.filterLabel, selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in
                     if let category {
                         Text(String(category))

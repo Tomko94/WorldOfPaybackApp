@@ -26,6 +26,7 @@ internal final class TransactionDetailsViewModel: ViewModelLayer<TransactionDeta
 
     private let serviceProvider: ServiceProviderType
     private let transactionEntity: TransactionEntity
+    private let mapper = TransactionDetailsMapper()
 
     // MARK: - Initialization
 
@@ -50,7 +51,7 @@ internal final class TransactionDetailsViewModel: ViewModelLayer<TransactionDeta
 
 extension TransactionDetailsViewModel {
     private func prepareModel(_ transactionEntity: TransactionEntity) {
-        self.partnerName = transactionEntity.partnerDisplayName
-        self.description = transactionEntity.transactionDetail.description
+        self.partnerName = mapper.mapPartnerName(transactionEntity)
+        self.description = mapper.mapDescription(transactionEntity)
     }
 }

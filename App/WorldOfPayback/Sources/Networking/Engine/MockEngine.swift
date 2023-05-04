@@ -21,7 +21,7 @@ class MockEngine: EngineType {
 
         try await Task.sleep(for: .seconds(Double.random(in: 1 ..< 2)))
 
-        if Int.random(in: 0 ..< 100) <= 100 {
+        if Int.random(in: 0 ..< 100) <= 40 {
             throw NetworkError.unknown
         }
 

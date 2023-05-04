@@ -18,16 +18,24 @@ extension TransactionListHeaderView {
         @Published public var filterLabel: String
         @Published public var allCategories: String
         @Published public var categories: [Int?]
-        @Published public var category: Int? = nil
+        @Published public var selectedCategory: Int?
 
         // MARK: - Initialization
 
-        init(transactionsSumTitle: String = "", transactionsSum: String = "", filterLabel: String = "", allCategories: String = "", categories: [Int?] = []) {
+        init(
+            transactionsSumTitle: String = "",
+            transactionsSum: String = "",
+            filterLabel: String = "",
+            allCategories: String = "",
+            categories: [Int?] = [],
+            selectedCategory: Int? = nil
+        ) {
             self.transactionsSumTitle = transactionsSumTitle
             self.transactionsSum = transactionsSum
             self.filterLabel = filterLabel
             self.allCategories = allCategories
             self.categories = categories
+            self.selectedCategory = selectedCategory
         }
     }
 }

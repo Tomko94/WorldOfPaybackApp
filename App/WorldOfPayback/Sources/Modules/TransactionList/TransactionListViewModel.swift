@@ -28,9 +28,9 @@ internal final class TransactionListViewModel: ViewModelLayer<TransactionListNav
     // MARK: - Private Properties
 
     private let serviceProvider: ServiceProviderType
-    private var transactionsEntity: [TransactionEntity]?
+    private var transactionEntityList: [TransactionEntity]?
     private var modelBag = Set<AnyCancellable>()
-    private var actionBag = Set<AnyCancellable>()
+    private var mapper = TransactionListMapper()
 
     // MARK: - Initialization
 
@@ -53,17 +53,13 @@ extension TransactionListViewModel {
         navigator.pushTransactionDetailsView(transactionEntity: transactionEntity)
     }
 
-    private func filterItems(byCategory categoryFilter: Int?) {
-        guard let transactionsEntity else { return }
+    private func filterChanged(byCategory categoryFilter: Int?) {
+        guard let transactionEntityList else { return }
 
-        let filteredTransactions = transactionsEntity.filter {
-            categoryFilter == nil || $0.category == categoryFilter
-        }
+        let sum = mapper.transactionsSum(transactionEntityList, categoryFilter: categoryFilter)
+        header.transactionsSum = "\(sum)"
 
-        prepareransactionList(filteredTransactions)
-
-        let filteredTransactionSum = filteredTransactions.map(\.transactionDetail.value.amount).reduce(0) { $0 + $1 }
-        header.transactionsSum = "\(filteredTransactionSum)"
+        transactions = mapTransactions(transactionEntityList, categoryFilter: categoryFilter)
     }
 }
 
@@ -99,53 +95,26 @@ extension TransactionListViewModel {
         }
     }
 
-    private func prepareModel(_ transactions: [TransactionEntity]) {
+    private func prepareModel(_ transactionsEntity: [TransactionEntity]) {
         toastController.state = .hidden
-        transactionsEntity = transactions
+        transactionEntityList = transactionsEntity
 
-        prepareHeader(transactions)
-        prepareransactionList(transactions)
+        header = mapHeader(transactionsEntity)
+        transactions = mapTransactions(transactionsEntity)
     }
 
-    private func prepareHeader(_ transactions: [TransactionEntity]) {
-        var categories: [Int?] = Array(Set(transactions.map(\.category))).sorted()
-        categories.insert(nil, at: 0)
-
-        let transactionSum = transactions.map(\.transactionDetail.value.amount).reduce(0) { $0 + $1 }
-        let header = TransactionListHeaderView.Model(
-            transactionsSumTitle: Translations.localizedString("TransactionsValue"),
-            transactionsSum: "\(transactionSum)",
-            filterLabel: Translations.localizedString("Category"),
-            allCategories: Translations.localizedString("All"),
-            categories: categories
-        )
-
-        header.$category
-            .sink { [weak self] in
-                self?.filterItems(byCategory: $0)
-            }
-            .store(in: &actionBag)
-
-        self.header = header
-    }
-
-    private func prepareransactionList(_ transactions: [TransactionEntity], categoryFilter: Int? = nil) {
-        let sortedTransactions = transactions.sorted {
-            $0.transactionDetail.bookingDate > $1.transactionDetail.bookingDate
+    private func mapHeader(_ transactions: [TransactionEntity], initialCategory: Int? = nil) -> TransactionListHeaderView.Model {
+        mapper.mapHeader(transactions, initialCategory: initialCategory) { [weak self] categoryFilter in
+            self?.filterChanged(byCategory: categoryFilter)
         }
-
-        self.transactions = sortedTransactions.map(mapTransactionItem)
     }
 
-    private func mapTransactionItem(_ transaction: TransactionEntity) -> TransactionListItemView.Model {
-        let item = TransactionListItemView.Model(transaction)
-
-        item.action
-            .sink { [weak self] in
-                self?.transactionSelected(transactionEntity: transaction)
-            }
-            .store(in: &actionBag)
-
-        return item
+    private func mapTransactions(
+        _ transactionsEntity: [TransactionEntity],
+        categoryFilter: Int? = nil
+    ) -> [TransactionListItemView.Model] {
+        mapper.mapTransactions(transactionsEntity, categoryFilter: categoryFilter) { [weak self] transactionEntity in
+            self?.transactionSelected(transactionEntity: transactionEntity)
+        }
     }
 }
