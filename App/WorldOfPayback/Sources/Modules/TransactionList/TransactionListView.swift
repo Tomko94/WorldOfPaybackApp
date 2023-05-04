@@ -30,13 +30,7 @@ internal struct TransactionListView<ViewModel: TransactionListViewModelType>: Vi
         }
         .padding(.vertical, Layout.Spacing.medium)
         .toastController(with: viewModel.toastController)
-        .navigationTitle(viewModel.title)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbarBackground(
-            Color.gray,
-            for: .navigationBar
-        )
-        .toolbarBackground(.visible, for: .navigationBar)
+        .navigationBar(with: viewModel.title)
         .onAppear {
             viewModel.onAppear()
         }

@@ -24,17 +24,15 @@ struct ToastController: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
             content
-                .zIndex(1.0)
 
-            switch model.toastType {
-            case .normal:
-                Text("").hidden()
-            case .loading:
-                cover()
-                    .zIndex(2.0)
-            case let .error(message):
-                Text(message)
-                    .zIndex(2.0)
+            Group {
+                if model.isCoverShown {
+                    cover()
+                }
+
+                model.message.map {
+                    error($0)
+                }
             }
         }
     }
@@ -51,11 +49,35 @@ extension ToastController {
                 .opacity(0.7)
                 .contentShape(Rectangle())
                 .ignoresSafeArea()
-                .zIndex(1.0)
-            ProgressView()
-                .scaleEffect(2.0)
-                .zIndex(2.0)
+
+            if model.isProgressIndicatorShown {
+                ProgressView()
+                    .scaleEffect(2.0)
+            }
         }
+    }
+
+    private func error(_ message: String) -> some View {
+        VStack(alignment: .center, spacing: Layout.Spacing.medium) {
+            Text(message)
+
+            HStack(spacing: Layout.Spacing.medium) {
+                model.retryButtonTitle.map {
+                    Button($0) {
+                        model.retryTapped()
+                    }
+                }
+
+                model.closeButtonTitle.map {
+                    Button($0) {
+                        model.closeTapped()
+                    }
+                }
+            }
+        }
+        .padding(Layout.Spacing.medium)
+        .background(Color.white)
+        .cornerRadius(Layout.CornerRadius.standard)
     }
 }
 

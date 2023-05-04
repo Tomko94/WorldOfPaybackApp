@@ -1,5 +1,5 @@
 //
-//  ToastController+Type.swift
+//  ToastController+State.swift
 //  WorldOfPayback
 //
 //  Created by Tomasz Węsierski on 03/05/2023.
@@ -9,9 +9,11 @@
 import Foundation
 
 extension ToastController {
+    typealias Retry = () -> Void
+
     public enum State {
-        case error(message: String)
+        case error(message: String, dismissible: Bool, _ retry: Retry? = nil)
         case loading
-        case normal
+        case hidden
     }
 }

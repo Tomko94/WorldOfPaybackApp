@@ -26,13 +26,7 @@ internal struct TransactionDetailsView<ViewModel: TransactionDetailsViewModelTyp
             }
         }
         .padding(.vertical, Layout.Spacing.medium)
-        .navigationTitle(viewModel.title)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbarBackground(
-            Color.gray,
-            for: .navigationBar
-        )
-        .toolbarBackground(.visible, for: .navigationBar)
+        .navigationBar(with: viewModel.title)
         .onAppear {
             viewModel.onAppear()
         }

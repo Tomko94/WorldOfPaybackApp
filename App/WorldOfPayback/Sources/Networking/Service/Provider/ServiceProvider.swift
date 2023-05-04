@@ -10,6 +10,6 @@ import Foundation
 
 class ServiceProvider: ServiceProviderType {
     func transactionService() -> TransactionServiceType {
-        MockTransactionService() // TODO: replace with actual implementation, when backend ready
+        TransactionService(engine: MockEngine()) // TODO: replace with actual implementation, when backend ready
     }
 }

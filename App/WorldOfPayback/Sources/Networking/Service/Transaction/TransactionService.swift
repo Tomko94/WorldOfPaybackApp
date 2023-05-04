@@ -9,8 +9,23 @@
 import Combine
 import Foundation
 
-class TransactionService: TransactionServiceType {
+protocol TransactionServiceType {
+    func getTransactionList() -> AnyPublisher<TransactionListEntity, Error>
+}
+
+class TransactionService: BaseService, TransactionServiceType {
     func getTransactionList() -> AnyPublisher<TransactionListEntity, Error> {
-        fatalError("Not implemented")
+        Future { promise in
+            Task {
+                do {
+                    let result = try await self.engine.sendRequest(endpoint: TransactionEndpoint.transactions, responseModel: TransactionListEntity.self)
+                    promise(.success(result))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
     }
 }

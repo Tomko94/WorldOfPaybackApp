@@ -29,7 +29,7 @@ internal final class TransactionListViewModel: ViewModelLayer<TransactionListNav
 
     private let serviceProvider: ServiceProviderType
     private var transactionsEntity: [TransactionEntity]?
-    private var bag = Set<AnyCancellable>()
+    private var modelBag = Set<AnyCancellable>()
     private var actionBag = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -40,7 +40,7 @@ internal final class TransactionListViewModel: ViewModelLayer<TransactionListNav
     }
 
     override func initialize() {
-        prepareModel()
+        loadModel()
     }
 }
 
@@ -72,25 +72,35 @@ extension TransactionListViewModel {
 // -----------------------------------------------------------------------------
 
 extension TransactionListViewModel {
-    private func prepareModel() {
-        toastController.toastType = .loading
+    private func loadModel() {
+        modelBag = .init()
+        toastController.state = .loading
+
         serviceProvider
             .transactionService()
             .getTransactionList()
             .map(\.items)
-            .sink(receiveCompletion: {
+            .sink(receiveCompletion: { [weak self] in
                 switch $0 {
-                case let .failure(error): print(error)
-                case .finished: return
+                case let .failure(error):
+                    self?.handleError(error: error)
+                case .finished:
+                    return
                 }
             }, receiveValue: { [weak self] in
                 self?.prepareModel($0)
-                self?.toastController.toastType = .normal
             })
-            .store(in: &bag)
+            .store(in: &modelBag)
+    }
+
+    private func handleError(error: Error) {
+        toastController.state = .error(message: error.localizedDescription, dismissible: true) { [weak self] in
+            self?.loadModel()
+        }
     }
 
     private func prepareModel(_ transactions: [TransactionEntity]) {
+        toastController.state = .hidden
         transactionsEntity = transactions
 
         prepareHeader(transactions)
@@ -129,7 +139,7 @@ extension TransactionListViewModel {
 
     private func mapTransactionItem(_ transaction: TransactionEntity) -> TransactionListItemView.Model {
         let item = TransactionListItemView.Model(transaction)
-        
+
         item.action
             .sink { [weak self] in
                 self?.transactionSelected(transactionEntity: transaction)

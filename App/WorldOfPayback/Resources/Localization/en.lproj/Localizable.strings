@@ -12,3 +12,6 @@
 "Category" = "Category";
 "DateAndTimeFormat" = "dd.MM.yyyy HH:mm";
 "All" = "All";
+"UnknownError" = "Error loading data.\nCheck your internet connection.";
+"Try Again" = "Try Again";
+"Close" = "Close";

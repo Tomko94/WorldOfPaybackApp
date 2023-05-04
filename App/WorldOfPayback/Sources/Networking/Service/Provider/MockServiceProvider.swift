@@ -10,6 +10,6 @@ import Foundation
 
 class MockServiceProvider {
     func transactionService() -> TransactionServiceType {
-        MockTransactionService()
+        TransactionService(engine: MockEngine())
     }
 }

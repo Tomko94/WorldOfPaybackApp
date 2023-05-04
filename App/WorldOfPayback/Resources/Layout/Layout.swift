@@ -16,4 +16,8 @@ public enum Layout {
         public static let medium = 15.0
         public static let large = 20.0
     }
+    
+    public enum CornerRadius {
+        public static let standard = 15.0
+    }
 }
