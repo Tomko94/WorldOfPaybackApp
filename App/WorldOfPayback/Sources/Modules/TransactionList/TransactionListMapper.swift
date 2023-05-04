@@ -32,6 +32,7 @@ class TransactionListMapper {
         )
 
         header.$selectedCategory
+            .dropFirst()
             .sink { action($0) }
             .store(in: &actionBag)
 

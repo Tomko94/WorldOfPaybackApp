@@ -10,6 +10,20 @@ import Combine
 import Foundation
 
 class MockEngine: EngineType {
+    // MARK: - Private Properties
+
+    private let mockDelay: Bool
+    private let mockFailure: Bool
+
+    // MARK: - Initialization
+
+    init(mockDelay: Bool = true, mockFailure: Bool = true) {
+        self.mockDelay = mockDelay
+        self.mockFailure = mockFailure
+    }
+
+    // MARK: - EngineType
+
     func sendRequest<T>(endpoint: Endpoint, responseModel: T.Type) async throws -> T where T: Decodable {
         guard let path = endpoint.mockFilePath else {
             throw NetworkError.invalidURL
@@ -19,9 +33,11 @@ class MockEngine: EngineType {
             throw NetworkError.invalidURL
         }
 
-        try await Task.sleep(for: .seconds(Double.random(in: 1 ..< 2)))
+        if mockDelay {
+            try await Task.sleep(for: .seconds(Double.random(in: 1 ..< 2)))
+        }
 
-        if Int.random(in: 0 ..< 100) <= 40 {
+        if mockFailure, Int.random(in: 0 ..< 100) <= 40 {
             throw NetworkError.unknown
         }
 

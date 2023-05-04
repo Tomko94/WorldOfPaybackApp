@@ -8,8 +8,22 @@
 
 import Foundation
 
-class MockServiceProvider {
+class MockServiceProvider: ServiceProviderType {
+    // MARK: - Private Properties
+
+    private let mockDelay: Bool
+    private let mockFailure: Bool
+
+    // MARK: - Initialization
+
+    init(mockDelay: Bool = true, mockFailure: Bool = true) {
+        self.mockDelay = mockDelay
+        self.mockFailure = mockFailure
+    }
+
+    // MARK: - ServiceProviderType
+
     func transactionService() -> TransactionServiceType {
-        TransactionService(engine: MockEngine())
+        TransactionService(engine: MockEngine(mockDelay: mockDelay, mockFailure: mockFailure))
     }
 }
