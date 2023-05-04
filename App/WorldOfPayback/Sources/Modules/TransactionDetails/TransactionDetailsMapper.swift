@@ -8,7 +8,7 @@
 
 import Combine
 
-class TransactionDetailsMapper {
+internal class TransactionDetailsMapper {
     func mapPartnerName(_ transactionEntity: TransactionEntity) -> String {
         transactionEntity.partnerDisplayName
     }
