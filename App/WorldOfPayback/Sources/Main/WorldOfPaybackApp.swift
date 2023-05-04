@@ -12,9 +12,7 @@ import SwiftUI
 struct WorldOfPaybackApp: App {
     var body: some Scene {
         WindowGroup {
-            StackNavigatorView { rootNavigator in
-                TransactionListModule().assemble(rootNavigator: rootNavigator)
-            }
+            HomeModule().assemble(rootNavigator: nil)
         }
     }
 }
