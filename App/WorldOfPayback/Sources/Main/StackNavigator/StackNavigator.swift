@@ -9,18 +9,21 @@
 import SwiftUI
 import SwiftUIArch
 
-public enum NavigationDestination: Hashable {
-    case dummy
-    case transactionDetails(transactionEntity: TransactionEntity)
+internal enum NavigationDestination: Hashable {
+    case dummy(module: DummyModule)
+    case transactionList(module: TransactionListModule)
+    case transactionDetails(module: TransactionDetailsModule)
 }
 
 class StackNavigator: RootNavigatorLayer {
     @ViewBuilder func viewForDestination(_ destination: NavigationDestination) -> some View {
         switch destination {
-        case .dummy:
-            Text("Dummy screen")
-        case let .transactionDetails(transactionEntity):
-            TransactionDetailsModule(transactionEntity).assemble(rootNavigator: self)
+        case let .dummy(module):
+            module.assemble()
+        case let .transactionList(module):
+            module.assemble()
+        case let .transactionDetails(module):
+            module.assemble()
         }
     }
 }

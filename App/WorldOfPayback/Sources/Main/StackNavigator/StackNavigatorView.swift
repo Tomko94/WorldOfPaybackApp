@@ -9,20 +9,20 @@
 import SwiftUI
 import SwiftUIArch
 
-struct StackNavigatorView<Content: View>: View {
-    // MARK: - Private Properties
+struct StackNavigatorView: View {
+    @ObservedObject var navigator = StackNavigator()
 
-    @StateObject private var navigator = StackNavigator()
-
-    // MARK: - Public Properties
-
-    var content: (_ rootNavigator: RootNavigatorLayer) -> Content
+    var rootDestination: NavigationDestination = .dummy(module: DummyModule(rootNavigator: nil))
+    
+    init(rootDestination: (_ rootNavigator: RootNavigatorLayer) -> NavigationDestination) {
+        self.rootDestination = rootDestination(navigator)
+    }
 
     // MARK: - Body Definition
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
-            content(navigator)
+            navigator.viewForDestination(rootDestination)
                 .navigationDestination(for: NavigationDestination.self) { destination in
                     navigator.viewForDestination(destination)
                 }

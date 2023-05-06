@@ -9,14 +9,18 @@
 import Foundation
 import SwiftUIArch
 
-internal final class HomeModule: ModuleLayer<HomeView<HomeViewModel>> {
-    // MARK: - Assemble
+internal final class HomeModule: ModuleLayer {
+    typealias ViewLayer = HomeView<HomeViewModel>
 
-    internal override func assemble(rootNavigator: RootNavigatorLayerType?) -> ViewLayer {
-        let navigator = ViewLayer.ViewModelLayer.NavigatorLayer(rootNavigator: rootNavigator)
-        let viewModel = ViewLayer.ViewModelLayer(navigator: navigator)
-        let view = ViewLayer(viewModel: viewModel)
+    let viewModel: ViewLayer.ViewModelLayer
 
-        return view
+    public init(rootNavigator: RootNavigatorLayerType?) {
+        let navigator = ViewLayer.ViewModelLayer.NavigatorLayer(rootNavigator: nil)
+        viewModel = ViewLayer.ViewModelLayer(navigator: navigator)
+        super.init()
+    }
+
+    func assemble() -> ViewLayer {
+        ViewLayer(viewModel: self.viewModel)
     }
 }

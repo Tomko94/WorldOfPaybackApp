@@ -12,7 +12,7 @@ import SwiftUIArch
 internal struct TransactionListView<ViewModel: TransactionListViewModelType>: View, ViewLayerType {
     // MARK: - Internal Properties
 
-    @StateObject internal var viewModel: ViewModel
+    @ObservedObject internal var viewModel: ViewModel
 
     // MARK: - Body Definition
 

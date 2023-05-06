@@ -10,9 +10,10 @@ import SwiftUI
 
 @main
 struct WorldOfPaybackApp: App {
+    let rootModule = HomeModule(rootNavigator: nil)
     var body: some Scene {
         WindowGroup {
-            HomeModule().assemble(rootNavigator: nil)
+            rootModule.assemble()
         }
     }
 }

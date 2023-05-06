@@ -19,31 +19,28 @@ internal struct HomeView<ViewModel: HomeViewModelType>: View, ViewLayerType {
     internal var body: some View {
         TabView {
             StackNavigatorView { rootNavigator in
-                TransactionListModule().assemble(rootNavigator: rootNavigator)
+                .transactionList(module: TransactionListModule(rootNavigator: rootNavigator))
             }
             .tabItem {
                 Label("Transactions", systemImage: "dollarsign")
             }
 
-            StackNavigatorView { _ in
-                Text("Coming soon")
-                    .navigationBar(with: "Shop")
+            StackNavigatorView { rootNavigator in
+                .dummy(module: DummyModule(rootNavigator: rootNavigator))
             }
             .tabItem {
                 Label("Shop", systemImage: "cart")
             }
 
-            StackNavigatorView { _ in
-                Text("Coming soon")
-                    .navigationBar(with: "Feed")
+            StackNavigatorView { rootNavigator in
+                    .dummy(module: DummyModule(rootNavigator: rootNavigator))
             }
             .tabItem {
                 Label("Feed", systemImage: "newspaper")
             }
 
-            StackNavigatorView { _ in
-                Text("Coming soon")
-                    .navigationBar(with: "Settings")
+            StackNavigatorView { rootNavigator in
+                    .dummy(module: DummyModule(rootNavigator: rootNavigator))
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")

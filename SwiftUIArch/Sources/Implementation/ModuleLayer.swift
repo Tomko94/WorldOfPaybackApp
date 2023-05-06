@@ -8,16 +8,22 @@
 
 import SwiftUI
 
-open class ModuleLayer<ViewLayer: ViewLayerType>: ModuleLayerType {
-    // MARK: - Public Typealiases
+open class ModuleLayer {
+    // MARK: - Private Properties
 
-    public typealias ViewLayer = ViewLayer
+    private let id = UUID()
 
     // MARK: - Initialization
 
     public init() {}
+}
 
-    // MARK: - Abstract Assemble Method
+extension ModuleLayer: Hashable {
+    public static func == (lhs: ModuleLayer, rhs: ModuleLayer) -> Bool {
+        lhs.id == rhs.id
+    }
 
-    open func assemble(rootNavigator: RootNavigatorLayerType?) -> ViewLayer { fatalError("Not implemented method \(#function)") }
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

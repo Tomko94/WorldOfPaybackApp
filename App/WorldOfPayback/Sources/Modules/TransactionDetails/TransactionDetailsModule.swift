@@ -7,26 +7,21 @@
 //
 
 import Foundation
+import SwiftUI
 import SwiftUIArch
 
-internal final class TransactionDetailsModule: ModuleLayer<TransactionDetailsView<TransactionDetailsViewModel>> {
-    // MARK: - Private Properties
+internal final class TransactionDetailsModule: ModuleLayer {
+    typealias ViewLayer = TransactionDetailsView<TransactionDetailsViewModel>
 
-    private let transactionEntity: TransactionEntity
+    let viewModel: ViewLayer.ViewModelLayer
 
-    // MARK: - Initialization
-
-    init(_ transactionEntity: TransactionEntity) {
-        self.transactionEntity = transactionEntity
+    public init(rootNavigator: RootNavigatorLayerType?, transactionEntity: TransactionEntity) {
+        let navigator = ViewLayer.ViewModelLayer.NavigatorLayer(rootNavigator: rootNavigator)
+        viewModel = ViewLayer.ViewModelLayer(navigator: navigator, transactionEntity: transactionEntity)
+        super.init()
     }
 
-    // MARK: - Assemble
-
-    internal override func assemble(rootNavigator: RootNavigatorLayerType?) -> ViewLayer {
-        let navigator = ViewLayer.ViewModelLayer.NavigatorLayer(rootNavigator: rootNavigator)
-        let viewModel = ViewLayer.ViewModelLayer(navigator: navigator, transactionEntity: transactionEntity)
-        let view = ViewLayer(viewModel: viewModel)
-
-        return view
+    func assemble() -> ViewLayer {
+        ViewLayer(viewModel: self.viewModel)
     }
 }

@@ -3,12 +3,18 @@
 import Foundation
 import SwiftUIArch
 
-internal final class ___VARIABLE_productName___Module: ModuleLayer<___VARIABLE_productName___View<___VARIABLE_productName___ViewModel>> {
-    internal override func assemble(rootNavigator: RootNavigatorLayerType?) -> ViewLayer {
+internal final class ___VARIABLE_productName___Module: ModuleLayer {
+    typealias ViewLayer = ___VARIABLE_productName___View<___VARIABLE_productName___ViewModel>
+
+    let viewModel: ViewLayer.ViewModelLayer
+
+    public init(rootNavigator: RootNavigatorLayerType?) {
         let navigator = ViewLayer.ViewModelLayer.NavigatorLayer(rootNavigator: rootNavigator)
-        let viewModel = ViewLayer.ViewModelLayer(navigator: navigator)
-        let view = ViewLayer(viewModel: viewModel)
-        
-        return view
+        viewModel = ViewLayer.ViewModelLayer(navigator: navigator)
+        super.init()
+    }
+
+    func assemble() -> ViewLayer {
+        ViewLayer(viewModel: self.viewModel)
     }
 }
