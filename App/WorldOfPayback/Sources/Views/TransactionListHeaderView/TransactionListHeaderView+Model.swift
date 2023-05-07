@@ -13,27 +13,27 @@ extension TransactionListHeaderView {
     public final class Model: ObservableObject {
         // MARK: - Published Properties
 
-        @Published public var transactionsSumTitle: String
-        @Published public var transactionsSum: String
-        @Published public var filterLabel: String
-        @Published public var allCategories: String
+        @Published public var transactionsSumTitleText: String
+        @Published public var transactionsSumText: String
+        @Published public var filterLabelText: String
+        @Published public var allCategoriesText: String
         @Published public var categories: [Int?]
         @Published public var selectedCategory: Int?
 
         // MARK: - Initialization
 
         init(
-            transactionsSumTitle: String = "",
-            transactionsSum: String = "",
-            filterLabel: String = "",
-            allCategories: String = "",
+            transactionsSumTitleText: String = "",
+            transactionsSumText: String = "",
+            filterLabelText: String = "",
+            allCategoriesText: String = "",
             categories: [Int?] = [],
             selectedCategory: Int? = nil
         ) {
-            self.transactionsSumTitle = transactionsSumTitle
-            self.transactionsSum = transactionsSum
-            self.filterLabel = filterLabel
-            self.allCategories = allCategories
+            self.transactionsSumTitleText = transactionsSumTitleText
+            self.transactionsSumText = transactionsSumText
+            self.filterLabelText = filterLabelText
+            self.allCategoriesText = allCategoriesText
             self.categories = categories
             self.selectedCategory = selectedCategory
         }

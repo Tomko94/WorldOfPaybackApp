@@ -18,10 +18,10 @@ final class TransactionListItemViewTests: XCTestCase {
 
     func testTransactionListItemView() throws {
         let listItemModel = TransactionListItemView.Model(
-            partnerName: "partnerName",
-            trensactionDescription: "transactionDescription",
-            date: "12.12.1234 12:12",
-            amount: "123 USD"
+            partnerNameText: "partnerName",
+            trensactionDescriptionText: "transactionDescription",
+            dateText: "12.12.1234 12:12",
+            amountText: "123 USD"
         )
         let listItemView = TransactionListItemView(listItemModel)
         let view: UIView = UIHostingController(rootView: listItemView).view

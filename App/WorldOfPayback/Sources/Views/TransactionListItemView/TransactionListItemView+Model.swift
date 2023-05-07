@@ -14,41 +14,41 @@ extension TransactionListItemView {
         // MARK: - Public Properties
 
         public let id = UUID()
-        public let partnerName: String
-        public let trensactionDescription: String?
-        public let date: String
-        public let amount: String
+        public let partnerNameText: String
+        public let trensactionDescriptionText: String?
+        public let dateText: String
+        public let amountText: String
 
         public var action = PassthroughSubject<Void, Never>()
 
         // MARK: - Initialization
 
-        public init(partnerName: String, trensactionDescription: String?, date: String, amount: String) {
-            self.partnerName = partnerName
-            self.trensactionDescription = trensactionDescription
-            self.date = date
-            self.amount = amount
+        public init(partnerNameText: String, trensactionDescriptionText: String?, dateText: String, amountText: String) {
+            self.partnerNameText = partnerNameText
+            self.trensactionDescriptionText = trensactionDescriptionText
+            self.dateText = dateText
+            self.amountText = amountText
         }
 
         convenience init(_ entity: TransactionEntity) {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = Translations.localizedString("DateAndTimeFormat")
             self.init(
-                partnerName: entity.partnerDisplayName,
-                trensactionDescription: entity.transactionDetail.description,
-                date: dateFormatter.string(from: entity.transactionDetail.bookingDate),
-                amount: entity.transactionDetail.value.displayString
+                partnerNameText: entity.partnerDisplayName,
+                trensactionDescriptionText: entity.transactionDetail.description,
+                dateText: dateFormatter.string(from: entity.transactionDetail.bookingDate),
+                amountText: entity.transactionDetail.value.displayString
             )
         }
 
         // MARK: - Equatable
 
         public static func == (lhs: TransactionListItemView.Model, rhs: TransactionListItemView.Model) -> Bool {
-            lhs.amount == rhs.amount &&
-                lhs.partnerName == rhs.partnerName &&
-                lhs.trensactionDescription == rhs.trensactionDescription &&
-                lhs.date == rhs.date &&
-                lhs.amount == rhs.amount
+            lhs.amountText == rhs.amountText &&
+                lhs.partnerNameText == rhs.partnerNameText &&
+                lhs.trensactionDescriptionText == rhs.trensactionDescriptionText &&
+                lhs.dateText == rhs.dateText &&
+                lhs.amountText == rhs.amountText
         }
     }
 }

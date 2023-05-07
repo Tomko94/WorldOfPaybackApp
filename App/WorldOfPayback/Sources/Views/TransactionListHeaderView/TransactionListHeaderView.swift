@@ -24,20 +24,20 @@ struct TransactionListHeaderView: View {
     var body: some View {
         HStack(spacing: Layout.Spacing.small) {
             VStack(spacing: Layout.Spacing.tiny) {
-                Text(model.transactionsSumTitle)
+                Text(model.transactionsSumTitleText)
                     .font(.caption)
-                Text(model.transactionsSum)
+                Text(model.transactionsSumText)
                     .font(.caption)
             }
 
             Spacer()
 
-            Picker(model.filterLabel, selection: $model.selectedCategory) {
+            Picker(model.filterLabelText, selection: $model.selectedCategory) {
                 ForEach(model.categories, id: \.self) { category in
                     if let category {
                         Text(String(category))
                     } else {
-                        Text(model.allCategories)
+                        Text(model.allCategoriesText)
                     }
                 }
             }
@@ -54,9 +54,9 @@ struct TransactionListHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         TransactionListHeaderView(
             TransactionListHeaderView.Model(
-                transactionsSumTitle: "Transactions value",
-                transactionsSum: "234 PBP",
-                filterLabel: "Category",
+                transactionsSumTitleText: "Transactions value",
+                transactionsSumText: "234 PBP",
+                filterLabelText: "Category",
                 categories: [nil, 1, 2, 3]
             )
         )

@@ -12,27 +12,27 @@ public struct TransactionListItemView: View {
     // MARK: - private Properties
 
     private let model: Model
-    
+
     // MARK: - Initialization
 
     internal init(_ model: Model) {
         self.model = model
     }
-    
+
     // MARK: - Body Definition
 
     public var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: Layout.Spacing.none) {
-                Text(model.partnerName)
+                Text(model.partnerNameText)
                     .font(.headline)
 
-                model.trensactionDescription.map {
+                model.trensactionDescriptionText.map {
                     Text($0)
                         .font(.caption)
                 }
 
-                Text(model.date)
+                Text(model.dateText)
                     .font(.caption2)
                     .padding(.top, Layout.Spacing.tiny)
             }
@@ -40,7 +40,7 @@ public struct TransactionListItemView: View {
             Spacer()
 
             VStack(alignment: .leading, spacing: Layout.Spacing.none) {
-                Text(model.amount)
+                Text(model.amountText)
                     .font(.headline)
                     .padding(.bottom, Layout.Spacing.tiny)
             }
@@ -60,6 +60,11 @@ public struct TransactionListItemView: View {
 
 struct TransactionListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionListItemView(.init(partnerName: "partnerName", trensactionDescription: nil, date: "12.12.2004 12:45", amount: "123 PBP"))
+        TransactionListItemView(.init(
+            partnerNameText: "partnerName",
+            trensactionDescriptionText: nil,
+            dateText: "12.12.2004 12:45",
+            amountText: "123 PBP"
+        ))
     }
 }

@@ -57,7 +57,7 @@ extension TransactionListViewModel {
         guard let transactionEntityList else { return }
 
         let sum = mapper.transactionsSum(transactionEntityList, categoryFilter: categoryFilter)
-        header.transactionsSum = "\(sum)"
+        header.transactionsSumText = "\(sum)"
 
         transactions = mapTransactions(transactionEntityList, categoryFilter: categoryFilter)
     }

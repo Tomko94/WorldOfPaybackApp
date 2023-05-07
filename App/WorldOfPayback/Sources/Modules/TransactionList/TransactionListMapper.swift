@@ -23,10 +23,10 @@ class TransactionListMapper {
         let transactionSum = transactionsSum(transactions, categoryFilter: initialCategory)
 
         let header = TransactionListHeaderView.Model(
-            transactionsSumTitle: Translations.localizedString("TransactionsValue"),
-            transactionsSum: "\(transactionSum)",
-            filterLabel: Translations.localizedString("Category"),
-            allCategories: Translations.localizedString("All"),
+            transactionsSumTitleText: Translations.localizedString("TransactionsValue"),
+            transactionsSumText: "\(transactionSum)",
+            filterLabelText: Translations.localizedString("Category"),
+            allCategoriesText: Translations.localizedString("All"),
             categories: categories,
             selectedCategory: initialCategory
         )
