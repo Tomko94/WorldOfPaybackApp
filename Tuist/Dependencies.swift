@@ -9,7 +9,8 @@ import ProjectDescription
 
 let dependencies = Dependencies(
     swiftPackageManager: [
-        .local(path: "SwiftUIArch")
+        .local(path: "SwiftUIArch"),
+        .remote(url: "https://github.com/pointfreeco/swift-snapshot-testing", requirement: .upToNextMajor(from: "1.10.0"))
     ],
     platforms: [.iOS]
 )
