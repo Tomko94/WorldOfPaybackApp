@@ -8,5 +8,6 @@ let project = Project.app(
     name: "WorldOfPayback",
     platform: .iOS,
     additionalTargets: [],
-    dependencies: [.external(name: "SwiftUIArch")]
+    dependencies: [.external(name: "SwiftUIArch")],
+    testDependencies: [.external(name: "SnapshotTesting")]
 )

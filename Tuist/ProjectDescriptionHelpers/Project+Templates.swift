@@ -7,11 +7,18 @@ import ProjectDescription
 
 extension Project {
     /// Helper function to create the Project for this ExampleApp
-    public static func app(name: String, platform: Platform, additionalTargets: [String], dependencies: [TargetDependency]) -> Project {
+    public static func app(
+        name: String,
+        platform: Platform,
+        additionalTargets: [String],
+        dependencies: [TargetDependency],
+        testDependencies: [TargetDependency]
+    ) -> Project {
         var targets = makeAppTargets(
             name: name,
             platform: platform,
-            dependencies: dependencies + additionalTargets.map { TargetDependency.target(name: $0) }
+            dependencies: dependencies + additionalTargets.map { TargetDependency.target(name: $0) },
+            testDependencies: testDependencies
         )
         targets += additionalTargets.flatMap { makeFrameworkTargets(name: $0, platform: platform) }
         return Project(
@@ -49,7 +56,12 @@ extension Project {
     }
 
     /// Helper function to create the application target and the unit test target.
-    private static func makeAppTargets(name: String, platform: Platform, dependencies: [TargetDependency]) -> [Target] {
+    private static func makeAppTargets(
+        name: String,
+        platform: Platform,
+        dependencies: [TargetDependency],
+        testDependencies: [TargetDependency]
+    ) -> [Target] {
         let platform: Platform = platform
         let infoPlist: [String: InfoPlist.Value] = [
             "CFBundleShortVersionString": "1.0",
@@ -76,7 +88,7 @@ extension Project {
             bundleId: "io.tuist.\(name)Tests",
             infoPlist: .default,
             sources: ["App/\(name)/Tests/**"],
-            dependencies: dependencies + [
+            dependencies: testDependencies + dependencies + [
                 .target(name: "\(name)")
             ]
         )
