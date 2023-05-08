@@ -24,7 +24,11 @@ extension Endpoint {
     }
 
     var host: String {
-        "api-test.payback.com/transactions" // TODO: host config
+        #if DEBUG
+        "api-test.payback.com"
+        #else
+        "api.payback.com"
+        #endif
     }
 
     var mockFilePath: String? {
